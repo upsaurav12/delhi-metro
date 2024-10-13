@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 //import { MapComponent } from "../component/Map";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline   } from 'react-leaflet';
 import { stations } from "./stations";
 
 interface StationData {
@@ -8,7 +8,7 @@ interface StationData {
     longitude: string,
     map_direction: string,
     station_name: string,
-}[]
+}
 
 interface Location {
   lat: number;
@@ -27,7 +27,6 @@ export const Delhi: React.FC = () => {
     const [location , setLocation] = useState<Location| null>(null)
     const [error , setError] = useState<string | null>(null)
     const [loading , setLoading] = useState<boolean>(false);
-    const defaultLocation: Location = { lat: 28.6139, lon: 77.209 };
 
     function roundCoordinate(coord: number, precision: number = 2): number {
       return parseFloat(coord.toFixed(precision));
@@ -106,14 +105,9 @@ export const Delhi: React.FC = () => {
           </ul>
 
           {/* MapContainer */}
-          <MapContainer
-              center={location ? [location.lat, location.lon] : [defaultLocation.lat, defaultLocation.lon]}
-              zoom={12}
-              style={{ height: "600px", width: "50%" }}
-          >
+          <MapContainer center = {[28.564011999999998 ,77.234245]} zoom={13} style={{ width: '600px' , height: '600px'}}>
               <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution="&copy; OpenStreetMap contributors"
               />
 
               {/* User Location Marker */}
@@ -135,7 +129,7 @@ export const Delhi: React.FC = () => {
               })}
 
               {/* Polyline for metro stations */}
-              {poly && <Polyline positions={poly} color="red" />}
+              {poly && <Polyline positions={poly} pathOptions={{ color: 'red' }} />}
           </MapContainer>
       </div>
   );
